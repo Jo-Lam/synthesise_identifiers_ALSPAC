@@ -20,7 +20,10 @@ For example:
 
 Fake Names Data Source:
 1) Surnames: 1996-2018 Census Surnames with freqeuncies (gender-free)
-2) Firstnames: 1996-2018 Baby Birth Name with frequencies, by gender
+list created by predecessor at UCL
+Comparable methods: see [this]([url](https://eprints.lse.ac.uk/115497/1/WP_342.pdf)) 
+3) Firstnames: 1996-2021 Baby Birth Name with frequencies, by gender
+accessed: https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesinenglandandwalesfrom1996
 
 Problems, using 1:1 replacement method:
 1) Both of the above data source doesn't have ethnicity information
