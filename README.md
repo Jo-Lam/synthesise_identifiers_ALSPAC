@@ -32,12 +32,13 @@ Problems, using 1:1 replacement method:
 
 
 Solution & Steps:
-0) Download and Clean the Data Sources (census_name.R)
-1) Prescribe Ethnicity base on only first name and only last name: Name Prism (Name_Prism.py)
+0) Download and Clean the Data Sources (0_census_name.R)
+1) Prescribe Ethnicity base on only first name and only last name: Name Prism (1_Name_Prism.py)
 - Getting ethnicity from names using Name Prism API
 - Race (US) from Name Prism (https://name-prism.com/about)
 - Request API at https://name-prism.com/api
 Repeat for both Data Sources
+Be considerate and limit request numbers!
 
 2) Load data, create dictionary, create synthesised names. (replacing_names.R)
 export to .csv
