@@ -51,10 +51,11 @@ Task B: Create Synthesised Data that replicates ALSPAC
 - Share the same combination of ethnicity/maternal_age category
 - Share the exact same N
 
-Use of R Package Synthpop (https://www.synthpop.org.uk/get-started.html)
+Use of R Package Synthpop (https://www.synthpop.org.uk/get-started.html) - 3_synthesise_data.R
 - problem: not all synthesised data would match combination of ethnicity/maternal_age category
 - Solution: Reject Sampling - create 200 copies
 
+Describe the synthesised datasets - 4_describe_syn_samples.R
 
 
 
