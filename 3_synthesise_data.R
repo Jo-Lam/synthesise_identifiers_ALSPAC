@@ -35,14 +35,54 @@ codebook.syn(data2)
 summary(data2)
 dim(data2)
 
-# set the number of accepted samples (start with 0)
-num_accepted_samples <- 0
+# set the number of accepted samples to accept (start with 1) This is such that we can loop until right number is found
+num_accepted_samples <- 1
 
 # Generate Data, set seed
 seed <- 20230507
 
 synth_data <- syn(data2,
-                  cont.na = list(race = 'Missing', maternal_agecat = 'NA'), # specify
+                  cont.na = list(race = 'Missing', maternal_agecat = 'NA'), # specify how missing is coded
+                  predictor.matrix = NULL,
+                  visit.seqeuence = c(3,5,1,2,4),
+                  seed = seed,
+                  drop.not.used = TRUE,
+                  print.flag = FLASE) # do not need to print in terminal
+                  
+write.syn(synth_data, filename = 'syndata', filetype = 'csv')
+synth_data <- data.frame(read.csv('syndata.csv'))
+synth_data$seed <- seed # add seed information back in synthesised data
+write.csv(synth_data, "syndata") # replace above
+
+# define accepted sample number (stop at)
+accepted_samples <- 0
+
+# re-set start seed
+seed <- 12345678
+
+# Define Loop Counter, for record taking how many loops required to capture enough datasets
+loop_counter <- 1
+while (accepted_samples < num_accepted_samples){
+  # gen new data using synthpop
+  seed <- seed + 1
+  print(paste("This is loop number:", loop_counter, " Random Seed Number:", seed, " Accepted Sample Count", accepted_samples))
+  new_data <- syn(data2,
+                  cont.na = list(race = 'Missing', maternal_agecat = 'NA'), 
+                  predictor.matrix = NULL,
+                  visit.seqeuence = c(3,5,1,2,4),
+                  seed = seed,
+                  drop.not.used = TRUE,
+                  print.flag = FLASE)
+  write.syn(new_data, filename = 'sample', filetype = 'csv')
+  new_data <- data.frame(read.csv('sample.csv'))
+  new_data$seed <- seed
+  loop_counter <- loop_counter + 1
+  
+  counts <- table("race" = new_data$race, "mat_age" = new_data$maternal_age, useNA = 'always') # create count variable to count eth/mat_cat num
+  White_under20 <- counts[5]
+  White_above40 <- counts[23]
+  
+  
 
 
 
