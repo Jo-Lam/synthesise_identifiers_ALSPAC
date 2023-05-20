@@ -80,161 +80,6 @@ while (accepted_samples < num_accepted_samples){
   
   counts <- table("race" = new_data$race, "mat_age" = new_data$maternal_age, useNA = 'always') # create count variable to count eth/mat_cat num
   White_under20 <- counts[5]
-  White_above40 <- counts[23]
-  
-  
-
-
-
-
-
-# Define the desired counts for each value
-desired_counts <- list(race = list("Black" >= 127, "Asian" >= 120, "Other" >= 90, "missing" >= 2173),
-                       maternal_age = list("30-39" >= 4735, "40+" >= 137, "<20" >= 529, "NA" >= 670))
-
-
-# desired_counts <- list(list(race = "White", maternal_age = "<20") = 362,
-#                       list(race = "White", maternal_age = "40+") = 135,
-#                       
-#                       list(race = "Black", maternal_age = "<20") = 8,
-#                       list(race = "Black", maternal_age = "20-29") = 56,
-#                       list(race = "Black", maternal_age = "30-39") = 54,
-#                       list(race = "Black", maternal_age = "40+") = 2,
-#                       
-#                       list(race = "Asian", maternal_age = "<20") = 7,
-#                       list(race = "Asian", maternal_age = "20-29") = 68,
-#                       list(race = "Asian", maternal_age = "30-39") = 40,
-#                       list(race = "Asian", maternal_age = "40+") = 0,
-#                       
-#                       list(race = "Other", maternal_age = "<20") = 3,
-#                       list(race = "Other", maternal_age = "20-29") = 37,
-#                       list(race = "Other", maternal_age = "30-39") = 42,
-#                       list(race = "Other", maternal_age = "40+") = 2,
-#                       
-#                       list(race = "missing", maternal_age = "<20") = 162,
-#                       list(race = "missing", maternal_age = "40+") = 22,
-#                       
-#                       list(race = "missing", maternal_age = "NA") = 850)
-
-# Set the number of accepted samples
-num_accepted_samples <- 50
-
-# Generate Synthetic Data
-seed <- 20230503
-# mysyn <- syn(data2,
-#              # rules = rules.list, 
-#              # rvalues =  rules.value.list,
-#              cont.na = list(race = "missing"),
-#              predictor.matrix = NULL,
-#              visit.sequence = c(3, 5, 1, 2 , 4),
-#              seed = seed,
-#              drop.not.used = TRUE)
-
-synth_data <- syn(data2,
-                # rules = rules.list,
-                # rvalues =  rules.value.list,
-                cont.na = list(race = "missing"),
-                predictor.matrix = NULL,
-                visit.sequence = c(3, 5, 1, 2 , 4),
-                seed = seed,
-                drop.not.used = TRUE)
-
-write.syn(synth_data, filename = 'syndata', filetype = 'csv')
-synth_data <- data.frame(read.csv('syndata.csv'))
-synth_data$seed <- seed
-synth_data$G1dob <- as.Date(as.numeric(synth_data$G1dob), origin = '1970-1-1')
-write.csv(synth_data, "syndata")
-
-
-
-# Define a function to check if the counts meet the desired values
-check_counts <- function(data, desired_counts) {
-  # Loop over each variable and its desired counts
-  for (var in names(desired_counts)) {
-    for (val in names(desired_counts[[var]])) {
-      # Count the number of observations with the current variable and value
-      count <- sum(data[[var]] == val)
-      # Check if the count is less than the desired count
-      if (count < desired_counts[[var]][[val]]) {
-        # If the count is less, return FALSE
-        return(FALSE)
-      }
-    }
-  }
-  # If all counts are at least the desired values, return TRUE
-  return(TRUE)
-}
-
-# Loop until we have the desired number of accepted samples
-accepted_samples <- 0
-
-# # Define a function to generate a synthetic dataset using CART in synthpop
-# generate_data <- function(seed) {
-#   # Set the random seed for this iteration
-#   set.seed(seed)
-#   # Generate a new synthetic dataset using CART in synthpop
-#   new_data <- syn(data2,
-#                   # rules = rules.list, 
-#                   # rvalues =  rules.value.list,
-#                   cont.na = list(race = "missing"),
-#                   predictor.matrix = NULL,
-#                   visit.sequence = c(3, 5, 1, 2 , 4),
-#                   seed = seed,
-#                   drop.not.used = TRUE)
-# }
-# 
-# cl <- makeCluster(detectCores())
-# 
-# while (accepted_samples < num_accepted_samples) {
-#   # Generate a list of random seeds for each iteration
-#   seeds <- seq(20230503 + accepted_samples, 20230503 + accepted_samples + getDoParWorkers() - 1)
-#   # Generate the synthetic datasets in parallel
-#   new_data_list <- parLapply(cl, seeds, generate_data)
-#   # Convert the list to a data frame
-#   new_data <- do.call(rbind, new_data_list)
-#   # Check if the counts meet the desired values
-#   if (check_counts(new_data, desired_counts)) {
-#     # If the counts meet the desired values, add the dataset to the output
-#     synth_data <- rbind(synth_data, new_data)
-#     # Increment the number of accepted samples
-#     accepted_samples <- accepted_samples + 1
-#     # Export the accepted sample as a CSV file with a name indicating its order
-#     file_name <- paste0("accepted_sample_", accepted_samples, ".csv")
-#     write.csv(new_data, file_name, row.names = FALSE)
-#   }
-# }
-# 
-# # Stop the parallel backend
-# stopCluster(cl)
-# 
-# # View the final synthetic dataset
-# head(synth_data)
-
-
-loop_counter <- 1
-# If no parallel implementation...
-while (accepted_samples < num_accepted_samples) {
-  # Generate a new synthetic dataset using CART in synthpop
-  seed <- sample(1:100000, 1) # choose any integer value to use as a seed
-  print(paste("This is loop number:",loop_counter, " Random seed Number: ", seed, " Accepted Sample Number Count: ", accepted_samples))
-  new_data <- syn(data2,
-               # rules = rules.list,
-               # rvalues =  rules.value.list,
-               cont.na = list(race = "missing", maternal_age = "NA"),
-               predictor.matrix = NULL,
-               visit.sequence = c(3, 5, 1, 2 , 4),
-               seed = seed,
-               drop.not.used = TRUE,
-               print.flag = FALSE)
-  write.syn(new_data, filename = 'sample', filetype = 'csv')
-  new_data <- data.frame(read.csv('sample.csv'))
-  new_data$seed <- seed
-  new_data$G1dob <- as.Date(as.numeric(new_data$G1dob), origin = '1970-1-1')
-  loop_counter <- loop_counter + 1
-  
-  counts <- table("race" = new_data$race, "mat_age"= new_data$maternal_age, useNA = "always")
-  
-  White_under20 <- counts[5]
   white_above40 <- counts[23]
   Black_under20 <- counts[2]
   Black_2029 <- counts[8]
@@ -252,24 +97,14 @@ while (accepted_samples < num_accepted_samples) {
   missing_above40 <- counts[21]
   missingboth <- counts[27]
   
-  
-  if (#White_under20 >= 362 & 
-      #white_above40 >= 135 & 
-      Black_under20 >= 8 & 
-      #Black_2029 >= 56 & 
-      #Black_3039 >= 54 & 
-      Black_above40 >= 2 & 
-      #Asian_under20 >= 7 & 
-      #Asian_2029 >= 68 & 
-      #Asian_3039 >= 40 & 
-      Asian_above40 == 0 & 
-      #Other_under20 >= 3 & 
-      #Other_2029 >= 37 & 
-      #Other_3039 >=42 & 
-      Other_above40 >= 2){ 
-      #missing_under20 >= 162 & 
-      #missing_above40 >=22 & 
-      #missingboth >= 850
+  # Conditions to meet
+  if (Black_under20 >= 11 & 
+      Black_above40 == 0 & 
+      Asian_under20 >= 4 & 
+      Asian_above40 <= 1 & 
+      Other_under20 >= 2 & 
+      Other_above40 >= 1){ 
+
     
     synth_data <- rbind(synth_data, new_data)
     accepted_samples <- accepted_samples + 1
@@ -277,19 +112,3 @@ while (accepted_samples < num_accepted_samples) {
     write.csv(new_data, file_name, row.names = FALSE)
   }
 }
-  
-  
-
-  
-#   # Check if the counts meet the desired values
-#   if (check_counts(new_data, desired_counts)) {
-#     # If the counts meet the desired values, add the dataset to the output
-#     synth_data <- rbind(synth_data, new_data)
-#     # Increment the number of accepted samples
-#     accepted_samples <- accepted_samples + 1
-#     # Export the accepted sample as a CSV file with a name indicating its order
-#     file_name <- paste0("accepted_sample_", accepted_samples, ".csv")
-#     write.csv(new_data, file_name, row.names = FALSE)
-#   }
-# }
-
