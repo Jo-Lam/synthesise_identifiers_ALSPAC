@@ -1,6 +1,6 @@
-# synthesise_names
+# synthesise_Data
 
-Task: Create High Fidelity Synthetic Dataset for ALSPAC
+Task A: Create High Fidelity Synthetic Dataset for ALSPAC
 Real ALSPAC Data is only accessible in Secure Research Environments, fake example data used to develop code. (fake_testing.csv)
 
 Considerations: 
@@ -45,6 +45,20 @@ export to .csv
 
 3) summarise synthetic names, compare cardinality (number of factors) to original names (replacing_names.R)
 Done.
+
+Task B: Create Synthesised Data that replicates ALSPAC
+- High Fidelity
+- Share the same combination of ethnicity/maternal_age category
+- Share the exact same N
+
+Use of R Package Synthpop (https://www.synthpop.org.uk/get-started.html)
+- problem: not all synthesised data would match combination of ethnicity/maternal_age category
+- Solution: Reject Sampling - create 200 copies
+
+
+
+
+
 
 
 
