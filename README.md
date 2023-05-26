@@ -55,7 +55,15 @@ Use of R Package Synthpop (https://www.synthpop.org.uk/get-started.html) - 3_syn
 - problem: not all synthesised data would match combination of ethnicity/maternal_age category
 - Solution: Reject Sampling - create 200 copies
 
-Describe the synthesised datasets - 4_describe_syn_samples.R
+Describe the synthesised datasets - 4_describe_syn_sample.r
+
+Task C: Corruption of data 
+Considerations
+- field of error 
+G0 Surname, G1 Surname, G1 Firstname
+- types of error 
+Surname: typo, insertion/deletion
+
 
 
 
