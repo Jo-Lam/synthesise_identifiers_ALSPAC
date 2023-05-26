@@ -105,7 +105,7 @@ tab
 prop <- lapply(unique_data_list, tabulate_prop_race_maternal)
 prop
 
-gold <- read.csv("fake_sample.csv")
+gold <- read.csv("fake_testing.csv")
 gold <- data.frame(gold)
 
 #compare in other ways
