@@ -6,13 +6,9 @@
 # 4. change date formatting in all
 rm(list=ls())
 
+# setwd("/DesktopSettings/Desktop/splink/sdv/")
 
-setwd("/DesktopSettings/Desktop/splink/sdv/")
-gold_standard <- read.csv("uk_gold.csv")
-gold_standard <- subset(gold_standard, select = -c(G0dob,G0surname, G1surname, G1forename))
-
-setwd("/DesktopSettings/Desktop/splink/sdv/batch3_50_samples/")
-
+# load file names
 file_names <- list.files(pattern = "^accepted_sample_.*\\.csv$")
 
 # Create an empty list to store the data frames
@@ -82,8 +78,6 @@ for(i in 1:length(unique_dataset_names)) {
 }
 
 
-
-
 # Define a function to create a cross-tabulation and calculate proportions
 tabulate_prop_race_maternal <- function(df) {
   # Create a cross-tabulation using the table() function
@@ -106,28 +100,15 @@ tabulate_race_maternal <- function(df) {
 
 # Use lapply() to apply the function to each data frame in data_frames
 tab <- lapply(unique_data_list, tabulate_race_maternal)
-
 tab
 
+prop <- lapply(unique_data_list, tabulate_prop_race_maternal)
+prop
 
-# # compare multiple data
-# # Check if required packages are installed ----
-# packages <- c("cowplot", "readr", "ggplot2", "dplyr", "lavaan", "Hmisc")
-# if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
-#   install.packages(setdiff(packages, rownames(installed.packages())))
-# }
-# 
-# # Load packages ----
-# library(ggplot2)
-library(arsenal)
+gold <- read.csv("fake_sample.csv")
+gold <- data.frame(gold)
 
-gold_df <- data.frame(gold_standard)
-
-# for(i in 1:length(unique_data_list)){
-#   summary(comparedf(gold_standard,data.frame(unique_data_list[i])))
-# } 
-
-summary(comparedf(gold_standard,data.frame(unique_data_list[1])))
+#compare in other ways
 
 
 
