@@ -40,10 +40,7 @@ Solution & Steps:
 Repeat for both Data Sources
 Be considerate and limit request numbers!
 
-2) Load data, create dictionary, create synthesised names. (replacing_names.R)
-export to .csv
-
-3) summarise synthetic names, compare cardinality (number of factors) to original names (replacing_names.R)
+2) summarise synthetic names, compare cardinality (number of factors) to original names (replacing_names.R)
 Done.
 
 Task B: Create Synthesised Data that replicates ALSPAC
@@ -63,6 +60,11 @@ Considerations
 G0 Surname, G1 Surname, G1 Firstname
 - types of error 
 Surname: typo, insertion/deletion
+
+3) Load data, create dictionary, create synthesised names. (replacing_names.R)
+export to .csv
+
+
 
 
 
