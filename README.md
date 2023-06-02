@@ -1,4 +1,6 @@
 # synthesise_Data
+This file is a brief introduction of the considerations and process of creating a synthetic ALSPAC dataset with fake names and high-fidelity data.
+For detailed description of the methods, please refer to the manuscript (to be published).
 
 Task A: Create High Fidelity Synthetic Dataset for ALSPAC
 Real ALSPAC Data is only accessible in Secure Research Environments, fake example data used to develop code. (fake_testing.csv)
@@ -52,17 +54,31 @@ Use of R Package Synthpop (https://www.synthpop.org.uk/get-started.html) - 3_syn
 - problem: not all synthesised data would match combination of ethnicity/maternal_age category
 - Solution: Reject Sampling - create 200 copies
 
-Describe the synthesised datasets - 4_describe_syn_sample.r
+Describe the synthesised datasets - 3_describe_syn_sample.r
+Inspect cardinality of eth/maternal age category fits with original data.
+
+3) Load data, create dictionary, create synthesised names. (4_replacing_names.R)
+This code also combines the synthesised names with the dataset, matching by ethnicity and gender where possible.
 
 Task C: Corruption of data 
 Considerations
 - field of error 
 G0 Surname, G1 Surname, G1 Firstname
 - types of error 
-Surname: typo, insertion/deletion
+Surname: insertion, deletion, random name replacement; 
+forename: name variants, typo, insertion, deletion, random name replacement
+We hope to replicate the same types of errors as the original linkage (please refer to paper). 
 
-3) Load data, create dictionary, create synthesised names. (replacing_names.R)
-export to .csv
+Data Corruption is split into 2 steps
+1) corruption (5_corrupt_alspac.py)
+2) selection (6_drawing_corrupted_data.py)
+
+We aim to create all possible error types at the 3 fields, and draw the appropriate distribution from the corrupted files.
+In selection, we can draw records according to designated error rates. This allow us to create multiple copies of the data to demonstrate how certain linkage methods might work better.
+
+This marks the completion of creating and corrupting synthetic data, for 200 copies.
+Corrupted synthetic datasets are then linked with gold standard synthesised dataset, and evaluated linkage against the linkage between ARCADAIA and CHDB in ALSPAC. Processes and evaluation of linkage will be collated in a separate GitHub document. 
+
 
 
 
