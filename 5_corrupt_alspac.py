@@ -1,6 +1,4 @@
-import argparse
-from asyncio import base_events
-from email.mime import base
+# In Development
 from pathlib import Path
 import os
 import logging
@@ -12,6 +10,7 @@ import duckdb
 
 # create path and transform .csv gold to parquet
 df = pd.read_csv('ALSPAC_syn_gold_new.csv')
+
 df.to_parquet('transformed_master_data_1000_records.parquet')
 pd.read_parquet('transformed_master_data_1000_records.parquet', engine='pyarrow')
 
@@ -40,7 +39,6 @@ from corrupt.corrupt_name import (
     alspac_G0_last_name_insertion,
     alspac_G0_last_name_deletion,
     alspac_first_name_typo, # 14% typo
-    alspac_name_inversion,
 )
 
 from corrupt.corrupt_id import (
@@ -512,7 +510,9 @@ adjustment_lookup_mat = {
 
 adjustment_mat = ProbabilityAdjustmentFromLookup(adjustment_lookup_mat)
 rc.add_probability_adjustment(adjustment_mat)
-"""                 
+"""
+
+# number of corrupted items per row
 max_corrupted_records = 1000
 zipf_dist = get_zipf_dist(max_corrupted_records)
 
@@ -523,6 +523,7 @@ pd.options.display.max_colwidth = 1000
 Path(ALSPAC_corrupt_outpath).mkdir(parents=True, exist_ok=True)
 
 """
+This enables parallel corruption for very larger data. 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="data_linking job runner")
