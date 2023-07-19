@@ -87,7 +87,7 @@ del df2['first_name_insdel']
 
 # Draw data - scenario 3 - error num.
 
-from multi_sample_data import multi_sample_data
+from multi_sample_data import multi_sample_data6
 """
 def multi_sample_data(df, conditions_list, sample_sizes):
     # Create a copy of the original dataframe to work with
@@ -120,7 +120,7 @@ sample_sizes = [2,2,3,6,16,5,48,38,114,730,3027,28,4372,253,594,229,39,94,29,25,
 
 # sample_sizes = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5,5,6,6,6,6,7,7,7,7,7,8,8,8,9,10,10,12,12,13,15,16,17,19,19,19,23,24,26,26,28,30,38,41,44,46,49,52,61,62,76,87,121,148,205,297,315,456,617,891]
 
-sampled_df_cond3, df_copy = multi_sample_data(df2, conditions_list, sample_sizes)
+sampled_df_cond3, df_copy = multi_sample_data6(df2, conditions_list, sample_sizes)
 print(sampled_df_cond3)
 
 sampled_df_cond3.to_csv('May_drawing_test_2023.csv', encoding = "utf-8-sig")
