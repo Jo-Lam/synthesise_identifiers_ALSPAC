@@ -1,4 +1,4 @@
-# synthesise_Data
+# Synthesising Names
 This file is a brief introduction of the considerations and process of creating a synthetic ALSPAC dataset with fake names and high-fidelity data.
 For detailed description of the methods, please refer to the manuscript (to be published).
 
