@@ -18,13 +18,6 @@ for(i in 1:length(file_names)) {
   data_list[[i]] <- read.csv(file_names[i])
 }
 
-
-# 2) Loop through the data frames in data_frames and modify the g1_dob_arc1 variable, moved to previous sheet
-# for(i in 1:length(data_list)) {
-#   data_list[[i]]$g1_dob_arc1 <- as.Date(as.numeric(data_list[[i]]$g1_dob_arc1), origin = '1970-1-1')
-# }
-
-
 # Initialize vector to store compiled values
 compiled_values <- vector(length = length(file_names))
 dataset_flags <- vector(length = length(file_names))
@@ -110,16 +103,15 @@ tabulate_race_maternal <- function(df) {
 
 # Use lapply() to apply the function to each data frame in data_frames
 tab <- lapply(data_list, tabulate_race_maternal)
-
 tab
 
 prop <- lapply(data_list, tabulate_prop_race_maternal)
 prop
 
-setwd("/hpchome/uctvjla@IDHS.UCL.AC.UK/")
+############# The section below is run only to quality assure synthetic data - Not Necessary for names generation ###################
 
 # load and compare gold standard
-gold <- read.csv("2023_05_31_clean_raw_cat.csv")
+gold <- read.csv("fake_testing.csv")
 gold <- data.frame(gold)
 gold$ethgroup <- as.factor(gold$ethgroup)
 gold$maternal_agecat <- as.factor(gold$maternal_agecat)
