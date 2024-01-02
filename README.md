@@ -21,7 +21,7 @@ For example:
 "Peter" (White, Male,Rank 1 most Frequent in Data Source)
 
 Fake Names Data Source:
-1) Surnames: 1996-2018 Census Surnames with freqeuncies (gender-free)
+1) Surnames: 1996-2018 Census Surnames with freqeuncies 
 list created by predecessor at UCL
 Comparable methods: see [this]([url](https://eprints.lse.ac.uk/115497/1/WP_342.pdf)) 
 3) Firstnames: 1996-2021 Baby Birth Name with frequencies, by gender
