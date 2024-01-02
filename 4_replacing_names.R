@@ -9,7 +9,7 @@
 # Step 4: replace terms in list by same order
 # Step 5: inspect new name lists
 rm(list=ls())
-setwd("N:/DesktopSettings/Desktop/splink/LearningPython")
+setwd()
 
 # load csvs 
 surnames_list <- read.csv("hao_output.csv")
@@ -19,9 +19,6 @@ female_names <- read.csv("female_output_nameprism.csv")
 # load data
 
 data <- read.csv("fake_testing.csv")
-names(data)[names(data) == "ï..G0_surname"] <- "G0_surname"
-
-# names(data)[names(data) == "?..G0_surname"] <- "G0_surname"
 
 # Step 0: Dedup male names and female names into a single column
 
@@ -422,7 +419,7 @@ write.csv(merge_data, file = file_name, row.names = TRUE)
 
 # add names to synthetic data
 
-# loop over 200 accepted samples
+# loop over accepted samples
 # need to maintain cardinality, meaning the same number of unique names need to be used
 
 file_names <- list.files(pattern = "^accepted_sample_.*\\.csv$")
@@ -455,7 +452,7 @@ for (i in 1:length(file_names)){
 }
 
 
-# inspect if mismatch is a problem.
+# inspect if name-mismatch by gender/ethnicity is a problem.
 
 # replace gender and ethnicity mismatch = 1 if not missing, = 0 if missing
 for (i in 1:200){
@@ -472,7 +469,7 @@ tabulate_gend_match <- function(df) {
   # Return the proportion table
   return(tab)
 }
-# apply to all 200 dataset
+# apply to all  dataset
 tab <- lapply(data_list, tabulate_gend_match)
 
 # function to tabulate ethncity mismatch with ethnicity
@@ -482,7 +479,7 @@ tabulate_eth_match <- function(df) {
   # Return the proportion table
   return(tab2)
 }
-# apply to all 200 dataset
+# apply to all dataset
 tab2 <- lapply(data_list, tabulate_eth_match)
 
 total_mismatch_gend <- c(male = 0, female = 0)
@@ -562,8 +559,6 @@ for (i in 1:200){
   data_list[[i]] <- data_list[[i]][, c("unique_id", names(data_list[[i]][-ncol(data_list[[i]])]))]
 }
 
-
-setwd("/hpchome/uctvjla@IDHS.UCL.AC.UK/6June_batch/")
 # save and replace
 for(i in 1:length(file_names)) {
   write.csv(data_list[[i]], file = paste0("accepted_sample_",i,".csv"))
