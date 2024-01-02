@@ -4,7 +4,7 @@ rm(list = ls())
 library("synthpop")
 
 # Load Raw Data
-data <- data.frame(read.csv('uk_gold.csv')) # fake data for code development
+data <- data.frame(read.csv('fake_testing.csv')) # fake data for code development
 dim(data)
 codebook.syn(data)$tab
 
@@ -24,11 +24,8 @@ data2$G1surname <- as.factor(data2$G1surname)
 data2$G1forename <- as.factor(data2$G1forename)
 data2 <-subset(data2,select = -c(nhsid))
 
-#omit names
-data2 <- subset(data2, select = -c(G0surname, G1surname, G1forename))
-
-#true data no date of birth G0
-data2 <- subset(data2, select = -c(G0dob))
+# Only keep relevant variables 
+data2 <- subset(data2, select = c(maternal_agecat, ethgroup, g1_gender_arc, imddecile, g1_dob_arc1))
 
 # describe data
 codebook.syn(data2)
@@ -36,10 +33,10 @@ summary(data2)
 dim(data2)
 
 # set the number of accepted samples to accept (start with 1) This is such that we can loop until right number is found
-num_accepted_samples <- 1
+num_accepted_samples <- 200
 
 # Generate Data, set seed
-seed <- 20230507
+seed <- 20230531
 
 synth_data <- syn(data2,
                   cont.na = list(race = 'Missing', maternal_agecat = 'NA'), # specify how missing is coded
@@ -58,7 +55,7 @@ write.csv(synth_data, "syndata") # replace above
 accepted_samples <- 0
 
 # re-set start seed
-seed <- 12345678
+seed <- 8765432
 
 # Define Loop Counter, for record taking how many loops required to capture enough datasets
 loop_counter <- 1
