@@ -60,35 +60,6 @@ Inspect cardinality of eth/maternal age category fits with original data.
 3) Load data, create dictionary, create synthesised names. (4_replacing_names.R)
 This code also combines the synthesised names with the dataset, matching by ethnicity and gender where possible.
 
-Task C: Corruption of data 
-Considerations
-- field of error 
-G0 Surname, G1 Surname, G1 Firstname
-- types of error 
-Surname: insertion, deletion, random name replacement; 
-forename: name variants, typo, insertion, deletion, random name replacement
-We hope to replicate the same types of errors as the original linkage (please refer to paper). 
+This marks the completion of creating synthetic identifiers and attribute varaibles, for 200 copies.
 
-Data Corruption is split into 2 steps
-1) corruption (5_corrupt_alspac.py)
-2) selection (6_drawing_corrupted_data.py)
-
-We aim to create all possible error types at the 3 fields, and draw the appropriate distribution from the corrupted files.
-In selection, we can draw records according to designated error rates. This allow us to create multiple copies of the data to demonstrate how certain linkage methods might work better.
-
-This marks the completion of creating and corrupting synthetic data, for 200 copies.
-Corrupted synthetic datasets are then linked with gold standard synthesised dataset, and evaluated linkage against the linkage between ARCADAIA and CHDB in ALSPAC. Processes and evaluation of linkage will be collated in a separate GitHub document. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Corrupted synthetic datasets are then linked with gold standard synthesised dataset, and evaluated linkage against the linkage between ARCADAIA and CHDB in ALSPAC. Corruption Processes and evaluation of linkage will be collated in a separate GitHub document. 
