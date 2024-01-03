@@ -2,8 +2,8 @@
 This file is a brief introduction of the considerations and process of creating a synthetic ALSPAC dataset with fake names and high-fidelity data.
 For detailed description of the methods, please refer to the manuscript (to be published).
 
-Task A: Create High Fidelity Synthetic Dataset for ALSPAC
-Real ALSPAC Data is only accessible in Secure Research Environments, fake example data used to develop code. (fake_testing.csv)
+Creating High Fidelity Synthetic Dataset for ALSPAC
+- Real ALSPAC Data is only accessible in Secure Research Environments, fake example data used to develop code. (fake_testing.csv)
 
 Considerations: 
 1) Retain Name-Ethnicity Association
@@ -34,7 +34,7 @@ Problems, using 1:1 replacement method:
 
 
 Solution & Steps:
-0) Download and Clean the Data Sources (0_census_name.R)
+0) Download and Clean the Data Sources - preprocessing (0_census_name.R), seperate name lists by gender
 1) Prescribe Ethnicity base on only first name and only last name: Name Prism (1_Name_Prism.py)
 - Getting ethnicity from names using Name Prism API
 - Race (US) from Name Prism (https://name-prism.com/about)
