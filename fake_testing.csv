@@ -1,16 +1,21 @@
-﻿G0_surname,G1_surname,G1_firstname,Gender,Race
-Tom,Tom,John,Male,White
-Abdullahi,Abdullahi,John,Male,Asian
-Patrick,Woods,John,Male,Black
-Fanny,Chung,Kate ,Female,White
-Lam,Lam,Janis,Female,White
-Tom,Tom,John,Female,White
-Abdullahi,Abdullahi,John,Female,Asian
-Patrick,Woods,John,Male,Black
-Fanny,Chung,Kate ,Female,White
-Lam,Lam,Janis,Female,White
-Tom,Tom,John,Male,Asian
-Abdullahi,Abdullahi,John,Male,Asian
-Patrick,Woods,John,Male,Black
-Fanny,Chung,Kate ,Female,White
-Lam,Lam,Janis,Female,White
+﻿unique_id,G0_surname,G1_surname,G1_firstname,Gender,ethgroup,imddecile,g1_dob_arc1,maternal_agecat
+1,Tom,Tom,John,Male,White,4,8121,20-29
+2,Abdullahi,Abdullahi,John,Male,Asian,4,7965,20-29
+3,Patrick,Woods,John,Male,Black,3,8360,<20
+4,Fanny,Chung,Kate ,Female,White,1,7991,30-39
+5,Lam,Lam,Janis,Female,White,4,7914,20-29
+6,Tom,Tom,John,Female,White,NA,8019,20-29
+7,Abdullahi,Abdullahi,John,Female,Asian,5,7903,20-29
+8,Patrick,Woods,John,Male,Black,2,8054,30-39
+9,Fanny,Chung,Kate ,Female,White,2,7980,30-39
+10,Lam,Lam,Janis,Female,White,5,7839,40+
+11,Tom,Tom,John,Male,Asian,2,8037,20-29
+12,Abdullahi,Abdullahi,John,Male,Asian,1,7766,20-29
+13,Patrick,Woods,John,Male,Black,NA,8187,20-29
+14,Fanny,Chung,Kate ,Female,White,4,8026,20-29
+15,Lam,Lam,Janis,Female,White,2,8254,20-29
+16,Muhammad,mac,mac,Male,Asian,5,8370,20-29
+17,Ahmed,mac,mac chan,Male,Asian,4,7918,30-39
+18,Arjun,nero,imran,Male,Asian,2,7989,20-29
+19,Ahmad,chung,chung,Male,Asian,1,8307,20-29
+20,Cai,amor,amor,Male,Asian,4,7979,30-39

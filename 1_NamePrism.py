@@ -34,10 +34,10 @@ def extract_ethnicity_likelihood(api_output):
     return ethnicity_likelihood_dict
 
 # Input file paths
-names_csv_file = "name.csv" # male list/female list from step 0
+names_csv_file = "name.csv" # change path/name to male list/female list from step 0
 
 # Output file paths
-output_csv_file = "output.csv" # output male list/female list 
+output_csv_file = "male_output_nameprism.csv" # female_output_nameprism
 
 # Read the list of names from the CSV file
 names_df = pd.read_csv(names_csv_file)

@@ -3,8 +3,8 @@
 rm(list = ls())
 library("readxl")
 
-male_names <- read_excel('N:/Downloads/babynames1996to2021.xlsx', sheet = "1")
-female_names <- read_excel('N:/Downloads/babynames1996to2021.xlsx', sheet = "2")
+male_names <- read_excel('names/babynames1996to2021.xlsx', sheet = "1")
+female_names <- read_excel('names/babynames1996to2021.xlsx', sheet = "2")
 
 # drop first 6 columns
 
@@ -42,5 +42,5 @@ female_names_count$total <- rowSums(female_names_count[,2:27], na.rm = TRUE)
 
 # export
 
-write.csv(male_names_count, "male_names.csv")
-write.csv(female_names_count, "female_names.csv")
+write.csv(male_names_count, "names/male_names.csv")
+write.csv(female_names_count, "names/female_names.csv")
