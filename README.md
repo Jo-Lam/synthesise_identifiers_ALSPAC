@@ -1,5 +1,6 @@
-# H1 Synthesising Names
+# Synthesising Names
 This repo is a code repository for my paper: Generating synthetic identifiers to support development and evaluation of data linkage methods.
+Please feel free to get in touch with me at joseph.lam.18@ucl.ac.uk
 
 This includes:
 1) process of creating a synthetic ALSPAC dataset
@@ -9,19 +10,19 @@ This includes:
 
 For detailed description of the methods, please refer to the manuscript (to be published).
 
-## H2 Creating High Fidelity Synthetic Dataset for ALSPAC
+## Creating High Fidelity Synthetic Dataset for ALSPAC
 - Real ALSPAC Data is only accessible in Secure Research Environments, fake example data used to demonstrate code. (fake_testing.csv)
 - As synthesised data is of high fidelity, and includes personally identifiable information, the original ALSPAC identifiers is not shared here.
 - Enquiry to the dataset is welcomed to contact ALSPAC team at University of Bristol.
 
 
-### H3 Synethsising Names for this study - Considerations: 
+### Synethsising Names for this study - Considerations: 
 1) Retain Name-Gender & Name-Ethnicity Association
 2) Retain Name-Frequency Order
 3) Retain Name Cardinality
 4) Avoid any identical synthetic names with original
 
-### H3 To Tackle Considerations:
+### To Tackle Considerations:
 1) Replace Names from Data Source belonging to the same ethnic group and gender
 2) Rank names by frequency
 3 & 4) Use 1:1 replacement method, across first names and surnames
@@ -30,19 +31,19 @@ For example:
 "John" (White, Male, Rank 1 most frequent in data) in ALSAPC surnames or first names will be replaced with 
 "Peter" (White, Male,Rank 1 most frequent in data source)
 
-### H3 Fake Names Data Source:
+### Fake Names Data Source:
 1) Surnames: 1996-2018 Census Surnames with freqeuncies 
 list created by predecessor at UCL (hao_output.csv)
 Comparable methods: see [this]([url](https://eprints.lse.ac.uk/115497/1/WP_342.pdf)) 
 3) Firstnames: 1996-2021 Baby Birth Name with frequencies, by gender
 accessed: https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesinenglandandwalesfrom1996
 
-### H3 Problems of using 1:1 replacement method:
+### Problems of using 1:1 replacement method:
 1) Both of the above data source doesn't have ethnicity information
 2) In data source, deduplicate names, by ethnicity and gender
 3) For 1:1 replacement to work, we have to make sure that there is no duplication across gender or ethnicity
 
-## H32 Solution to above problems & Steps:
+## Solution to above problems & Steps:
 0) Download and Clean the Data Sources - preprocessing (0_census_name.R), seperate name lists by gender
 1) Prescribe Ethnicity base on only first name and only last name: Name Prism (1_Name_Prism.py)
 - Getting ethnicity from names using Name Prism API
@@ -72,7 +73,7 @@ For my paper, I have used first 5 copies of these 200 synthetic data as gold sta
 
 For each gold-standard dataset, it will be corrupted based on 4 scenarios, creating 4 copies of corrupted synthetic dataset that has different level of fidelity compared to the gold standard synthetic data.
 
-## H2 Data Corruption 
+## Data Corruption 
 Each corruption process is split into 2 steps:
 1) create corrupted dataset
 2) select relevant number of records (N matching the original sample for my purpose)
@@ -95,7 +96,7 @@ Drawing relavent samples from corrupted data to induce error co-occurring patter
 
 Inspect Data:  12_inspect_drawn_samples.py
 
-## H2 Data linkage
+## Data linkage
 Now that for each gold standard synthetic dataset, we have 4 scenarios of corrupted data, we can perform linkages between each corrupted data with the gold standard synthetic data, and compare the linkage quality metrics with the original linkage between  ALSPAC waves. Three data linkage settings were explored:
 - deterministic
 - probabilistic with Jaro-Winkler Similarity Scores
@@ -103,8 +104,9 @@ Now that for each gold standard synthetic dataset, we have 4 scenarios of corrup
 
 (13_data_linkage.py)
 
+## Compare findings
 False matches and miss matches at each scenario is summarised and compared (14_compare_linkages.py, 15_combine_outputs.py).
 against original linkage in ALSPAC, which is not described here.
 
-For results and further description of the methodology, please read my paper and the appendix materials.
-Please feel free to get in touch at joseph.lam.18@ucl.ac.uk
+For results and further description of the methodology, please read my paper and the appendix materials. (links to be added)
+
