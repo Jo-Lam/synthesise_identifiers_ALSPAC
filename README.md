@@ -61,5 +61,26 @@ Inspect cardinality of eth/maternal age category fits with original data.
 This code also combines the synthesised names with the dataset, matching by ethnicity and gender where possible.
 
 This marks the completion of creating synthetic identifiers and attribute varaibles, for 200 copies.
+For my paper, I have used first 5 copies of these 200 synthetic data as gold standard. 
 
-Corrupted synthetic datasets are then linked with gold standard synthesised dataset, and evaluated linkage against the linkage between ARCADAIA and CHDB in ALSPAC. Corruption Processes and evaluation of linkage will be collated in a separate GitHub document. 
+![Flowchart Synthetic Data work v2](https://github.com/Jo-Lam/synthesise_identifiers_ALSPAC/assets/56257474/14928f62-a283-4d67-8739-caf7dbead3ef) (Figure 2 from my paper)
+
+For each gold-standard dataset, it will be corrupted based on 4 scenarios, creating 4 copies of corrupted synthetic dataset that has different level of fidelity compared to the gold standard synthetic data.
+Each corruption process is split into 2 steps:
+1) create corrupted dataset
+2) select relevant number of records (N matching the original sample for my purpose)
+Corrupted synthetic datasets are then linked with gold standard synthesised dataset, and evaluated against the linkage between ARCADAIA and CHDB in ALSPAC. 
+
+Corruption Scenarios:
+![image](https://github.com/Jo-Lam/synthesise_identifiers_ALSPAC/assets/56257474/75b0008a-6ffa-4930-9c14-7bff5faaf5c6)
+
+Error-Attribute relationship
+1) Known error-attribute relationship, known error-coocurring pattern
+2) Error-attribute relationship estimated based on relative risk, estimated error-cooccurring pattern
+3) Independent error-attribute relationship, estimated error-cooccurring pattern
+4) Indepedent error-attribute relationship, restricted error-cooccurring pattern (
+
+
+
+
+
