@@ -102,7 +102,7 @@ Now that for each gold standard synthetic dataset, we have 4 scenarios of corrup
 - probabilistic with Jaro-Winkler Similarity Scores
 - probabilistic with Jaro-Winkler Similarity Scores and Term Frequency Adjustment
 
-(13_data_linkage.py)
+13_scenario_x_linkage.ipynb - for each linkage scenario.
 
 ## Compare findings
 False matches and miss matches at each scenario is summarised and compared (14_compare_linkages.py, 15_combine_outputs.py).
@@ -111,6 +111,7 @@ against original linkage in ALSPAC, which is not described here.
 16_missed_matches_describe.py is used to characterise records that are false/missed matched.
 (require linkage with no threshold set to observe mismatch pattern.)
 17_compare_missed_matches.py combines the output from each scenarios into a single .csv file.
+Results from original data is populated into the same table -> (appendix table A8).
 
 For results and further description of the methodology, please read my paper and the appendix materials.
 Please feel free to get in touch at joseph.lam.18@ucl.ac.uk
