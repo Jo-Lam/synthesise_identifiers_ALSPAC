@@ -8,27 +8,17 @@ def filter_duplicates_probabilistic(df):
     return df
 
 # scenario 0,1 uses independent data
-scenarios = 1
-data_set = 5
+scenarios = 3
+data_set = 1
 
 directory_path = f"linkage_outputs\\scen{scenarios}\\dataset{data_set}"
 if not os.path.exists(directory_path):
     os.makedirs(directory_path)
 
-# file_name = "probabilistic_threshold_3.csv"
-file_name = "tf_2.csv"
+collected_data = []
 
-file_path = os.path.join(directory_path, file_name)
-df = pd.read_csv(file_path)
-df['match'] = (df['unique_id_l'] == df['unique_id_r']).astype(int)
-filtered_df = filter_duplicates_probabilistic(df)
-filtered_df.reset_index(drop=True, inplace=True)
-filtered_df.rename(columns={'unique_id_l': 'unique_id'}, inplace = True)
-
-false_positive_list = filtered_df[filtered_df['match'] == 0]
-
-# If indepedent, run this block
-
+# If indepedent, run this block (scenario 0, 1)
+"""
 comparison_directory = os.path.join(os.getcwd(), f"output\\independent")
 gold_file_name = f"data_{data_set}_independent.csv"
 file_path = os.path.join(comparison_directory, gold_file_name)
@@ -68,37 +58,88 @@ gold_df['imddecile'] = gold_df['imddecile'].replace('', np.nan)
 gold_df['syn_g1_firstname'] = gold_df['syn_g1_firstname'].replace('missing', np.nan)
 gold_df['syn_g0_surname'] = gold_df['syn_g0_surname'].replace('missing', np.nan)
 gold_df['syn_g1_surname'] = gold_df['syn_g1_surname'].replace('missing', np.nan)
-"""
-# merge
-merged_df = gold_df.merge(filtered_df, on = 'unique_id', how = 'left') 
 
-gold_id = gold_df['unique_id']
-linked_id = filtered_df['unique_id']
-unlinked_id = list(set(gold_id) - set (linked_id))
-missed = gold_df[gold_df['unique_id'].isin(unlinked_id)]
-missed
+for filename in os.listdir(directory_path):
+    file_path = os.path.join(directory_path, filename)
+    if "probabilistic_threshold_3.csv" in filename:
+        file_path = os.path.join(directory_path, filename)
+        df = pd.read_csv(file_path)
+        df['match'] = (df['unique_id_l'] == df['unique_id_r']).astype(int)
+        filtered_df = filter_duplicates_probabilistic(df)
+        filtered_df.reset_index(drop=True, inplace=True)
+        filtered_df.rename(columns={'unique_id_l': 'unique_id'}, inplace = True)
+        false_positive_list = filtered_df[filtered_df['match'] == 0]
+        # merge_df to get
+        merged_df = gold_df.merge(filtered_df, on = 'unique_id', how = 'left')
+        gold_id = gold_df['unique_id']
+        linked_id = filtered_df['unique_id']
+        unlinked_id = list(set(gold_id) - set (linked_id))
+        missed = gold_df[gold_df['unique_id'].isin(unlinked_id)]
+        # compare no threshold to inspect unlinked records
+        nothresh_path = os.path.join(directory_path, "probabilistic_tf_nothreshold.csv") 
+        nothresh_df = pd.read_csv(nothresh_path)
+        nothresh_df = pd.read_csv(f"linkage_outputs\\scen{scenarios}\\dataset{data_set}\\probabilistic_tf_nothreshold.csv")  
+        nothresh_df['match'] = (nothresh_df['unique_id_l'] == nothresh_df['unique_id_r']).astype(int)
+        nothresh_df = filter_duplicates_probabilistic(nothresh_df)
+        nothresh_df.reset_index(drop = True, inplace = True)
+        filtered_nothresh_df = nothresh_df[nothresh_df['unique_id_l'].isin(unlinked_id)]
+        filtered_nothresh_df['g1fore_match'] = (filtered_nothresh_df['syn_g1_firstname_l'] == filtered_nothresh_df['syn_g1_firstname_r']).astype(int)
+        filtered_nothresh_df['g0sur_match'] = (filtered_nothresh_df['syn_g0_surname_l'] == filtered_nothresh_df['syn_g0_surname_r']).astype(int)
+        filtered_nothresh_df['g1sur_match'] = (filtered_nothresh_df['syn_g1_surname_l'] == filtered_nothresh_df['syn_g1_surname_r']).astype(int)
+        filtered_nothresh_df['gender_match'] = (filtered_nothresh_df['g1_gender_arc_l'] == filtered_nothresh_df['g1_gender_arc_r']).astype(int)
+        filtered_nothresh_df['dob_match'] = (filtered_nothresh_df['g1_dob_arc1_l'] == filtered_nothresh_df['g1_dob_arc1_r']).astype(int)
+        cols = ['g1fore_match', 'g0sur_match', 'g1sur_match',  'gender_match', 'dob_match']
+        filtered_nothresh_df['pattern'] = filtered_nothresh_df[cols].apply(lambda row: ''.join(row.values.astype(str)),axis = 1)
+        collected_data.append({
+            'Scenario': scenarios,
+            'Data': data_set,
+            'Type': "probabilistic",
+            'Number false matches': len(false_positive_list),
+            'Number missed matches':len(filtered_nothresh_df),
+            'Counts missed matches': filtered_nothresh_df["pattern"].value_counts(), 
+            'Percent missed matches': (filtered_nothresh_df["pattern"].value_counts()/len(filtered_nothresh_df))
+            })
 
-# load in no threshold dataset
-
-# nothresh_df = pd.read_csv(f"linkage_outputs\\scen{scenarios}\\dataset{data_set}\\20240104_probabilistic_nothreshold.csv") 
-nothresh_df = pd.read_csv(f"linkage_outputs\\scen{scenarios}\\dataset{data_set}\\20240104_probabilistic_tf_nothreshold.csv") 
-
-nothresh_df['match'] = (nothresh_df['unique_id_l'] == nothresh_df['unique_id_r']).astype(int)
-nothresh_df = filter_duplicates_probabilistic(nothresh_df)
-nothresh_df.reset_index(drop = True, inplace = True)
-
-filtered_nothresh_df = nothresh_df[nothresh_df['unique_id_l'].isin(unlinked_id)]
-
-filtered_nothresh_df['g1fore_match'] = (filtered_nothresh_df['syn_g1_firstname_l'] == filtered_nothresh_df['syn_g1_firstname_r']).astype(int)
-filtered_nothresh_df['g0sur_match'] = (filtered_nothresh_df['syn_g0_surname_l'] == filtered_nothresh_df['syn_g0_surname_r']).astype(int)
-filtered_nothresh_df['g1sur_match'] = (filtered_nothresh_df['syn_g1_surname_l'] == filtered_nothresh_df['syn_g1_surname_r']).astype(int)
-filtered_nothresh_df['gender_match'] = (filtered_nothresh_df['g1_gender_arc_l'] == filtered_nothresh_df['g1_gender_arc_r']).astype(int)
-filtered_nothresh_df['dob_match'] = (filtered_nothresh_df['g1_dob_arc1_l'] == filtered_nothresh_df['g1_dob_arc1_r']).astype(int)
-
-cols = ['g1fore_match', 'g0sur_match', 'g1sur_match',  'gender_match', 'dob_match']
-filtered_nothresh_df['pattern'] = filtered_nothresh_df[cols].apply(lambda row: ''.join(row.values.astype(str)),axis = 1)
-
-result = pd.DataFrame({'Counts': filtered_nothresh_df["pattern"].value_counts(), 'Percent': (filtered_nothresh_df["pattern"].value_counts()/len(filtered_nothresh_df))})
-result 
-
-len(filtered_nothresh_df)
+for filename in os.listdir(directory_path):
+    file_path = os.path.join(directory_path, filename)
+    if "tf_2.csv" in filename:
+        file_path = os.path.join(directory_path, filename)
+        df = pd.read_csv(file_path)
+        df['match'] = (df['unique_id_l'] == df['unique_id_r']).astype(int)
+        filtered_df = filter_duplicates_probabilistic(df)
+        filtered_df.reset_index(drop=True, inplace=True)
+        filtered_df.rename(columns={'unique_id_l': 'unique_id'}, inplace = True)
+        false_positive_list = filtered_df[filtered_df['match'] == 0]
+        # merge_df to get
+        merged_df = gold_df.merge(filtered_df, on = 'unique_id', how = 'left')
+        gold_id = gold_df['unique_id']
+        linked_id = filtered_df['unique_id']
+        unlinked_id = list(set(gold_id) - set (linked_id))
+        missed = gold_df[gold_df['unique_id'].isin(unlinked_id)]
+        # compare no threshold to inspect unlinked records
+        nothresh_path = os.path.join(directory_path, "probabilistic_tf_nothreshold.csv") 
+        nothresh_df = pd.read_csv(nothresh_path)
+        nothresh_df = pd.read_csv(f"linkage_outputs\\scen{scenarios}\\dataset{data_set}\\probabilistic_nothreshold.csv")  
+        nothresh_df['match'] = (nothresh_df['unique_id_l'] == nothresh_df['unique_id_r']).astype(int)
+        nothresh_df = filter_duplicates_probabilistic(nothresh_df)
+        nothresh_df.reset_index(drop = True, inplace = True)
+        filtered_nothresh_df = nothresh_df[nothresh_df['unique_id_l'].isin(unlinked_id)]
+        filtered_nothresh_df['g1fore_match'] = (filtered_nothresh_df['syn_g1_firstname_l'] == filtered_nothresh_df['syn_g1_firstname_r']).astype(int)
+        filtered_nothresh_df['g0sur_match'] = (filtered_nothresh_df['syn_g0_surname_l'] == filtered_nothresh_df['syn_g0_surname_r']).astype(int)
+        filtered_nothresh_df['g1sur_match'] = (filtered_nothresh_df['syn_g1_surname_l'] == filtered_nothresh_df['syn_g1_surname_r']).astype(int)
+        filtered_nothresh_df['gender_match'] = (filtered_nothresh_df['g1_gender_arc_l'] == filtered_nothresh_df['g1_gender_arc_r']).astype(int)
+        filtered_nothresh_df['dob_match'] = (filtered_nothresh_df['g1_dob_arc1_l'] == filtered_nothresh_df['g1_dob_arc1_r']).astype(int)
+        cols = ['g1fore_match', 'g0sur_match', 'g1sur_match',  'gender_match', 'dob_match']
+        filtered_nothresh_df['pattern'] = filtered_nothresh_df[cols].apply(lambda row: ''.join(row.values.astype(str)),axis = 1)
+        collected_data.append({
+            'Scenario': scenarios,
+            'Data': data_set,
+            'Type': "tf",
+            'Number false matches': len(false_positive_list),
+            'Number missed matches':len(filtered_nothresh_df),
+            'Counts missed matches': filtered_nothresh_df["pattern"].value_counts(), 
+            'Percent missed matches': (filtered_nothresh_df["pattern"].value_counts()/len(filtered_nothresh_df))
+            })
+     
+data_df = pd.DataFrame(collected_data)
+data_df.to_csv(f"linkage_outputs\\scen{scenarios}\\dataset{data_set}\\dataset{data_set}_miss_match.csv")
