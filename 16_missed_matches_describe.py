@@ -7,7 +7,7 @@ def filter_duplicates_probabilistic(df):
     df = df.groupby("unique_id_l").first().reset_index()
     return df
 
-# scenario 0,1 uses independent data
+# scenario 3,4 uses independent data
 scenarios = 3
 data_set = 1
 
@@ -17,7 +17,7 @@ if not os.path.exists(directory_path):
 
 collected_data = []
 
-# If indepedent, run this block (scenario 0, 1)
+# If indepedent, run this block (scenario 3, 4)
 """
 comparison_directory = os.path.join(os.getcwd(), f"output\\independent")
 gold_file_name = f"data_{data_set}_independent.csv"
